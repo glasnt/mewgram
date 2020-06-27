@@ -1,0 +1,8 @@
+Django==3.1b1
+hypothesis[django]
+
+gunicorn
+django-storages[google]
+django-environ
+google-cloud-secret-manager==0.1.1
+psycopg2-binary
