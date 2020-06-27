@@ -1,0 +1,36 @@
+/* https://bennettfeely.com/clippy/ */
+.hex-image {
+clip-path: polygon(26% 7%, 74% 7%, 97% 50%, 74% 93%, 26% 93%, 3% 50%);
+  height: 80px; 
+}
+
+.purr {
+    display: flex; 
+    width: 80%;
+    padding: 10px;
+} 
+.purr.reply { 
+    padding: 0px; 
+    padding-left: 80px;
+}
+.avatar { 
+    margin: 10px;
+}
+.data {
+    display: flex;
+    padding-top: 10px;
+    flex-direction: column;
+}
+.meta { 
+}
+.display_name { font-weight: bold; display: inline-block;}
+.datetime { color: darkgrey; display: inline-block;}
+.content { }
+
+.hidden-form { display: none }
+
+form { border: none; box-shadow: none; border-radius: unset; display: flex }
+.replyform { margin-block-end: -20px; }
+.replyinput { margin-right: 5px; }
+.purrform { padding: 0px; flex-direction: column }
+

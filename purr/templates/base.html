@@ -1,0 +1,22 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="{% static 'css/purr.css' %}">
+</head>
+<title>{%block title%}{%endblock%}&gt; mewgram &lt;</title>
+<body>
+    <header>
+    <h1>&gt; mewgram &lt;</h1>
+    </header>
+
+    <main>
+        <section>
+        {% block content %}{% endblock %}
+        </section>
+    </main>
+    <footer>
+    <hr>
+        🐱 Frumpkin, 2020.
+    </footer>
+<body>

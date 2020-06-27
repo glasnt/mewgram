@@ -1,1 +1,27 @@
-{{ purr.user.display_name }} ({{ purr.relative_time }}): {{ purr.content }}
+{% include "avatar_snippet.html" with user=purr.user %}
+<div class="data">
+    <div class="meta">
+        <div class="display_name">{{ purr.display_name }}</div>
+        <time class="datetime" datetime="{{purr.date_posted}}">{{ purr.relative_date }}</time>
+    </div>
+    <div class="content">
+        {{ purr.content }}
+    </div>
+
+    {% if purr.can_reply %}
+    <span onClick="toggleReply('form_{{purr.id}}')">🐾</span>
+    <div id="form_{{purr.id}}" class="reply hidden-form">
+    <form class="replyform" action="{% url 'reply' purr.id %}" method="post">{% csrf_token %}
+    <input name="content" id="id_content" class="replyinput"><input type="submit" value="Purr">
+    </form>
+    </div>
+    {% endif %}
+
+</div>
+<script>
+function toggleReply(formid) {
+    var ele = document.getElementById(formid);
+    ele.classList.toggle("hidden-form");
+}
+</script>
+

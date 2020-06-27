@@ -13,6 +13,8 @@ SECRET_KEY = env("SECRET_KEY")
 HASHID_FIELD_SALT = env("HASHID_FIELD_SALT")
 DEBUG = env("DEBUG", default=False)
 
+ROBOCAT_HOST = env("ROBOCAT_HOST")
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -104,3 +106,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
+STATICFILES_DIRS = ['purr/static']

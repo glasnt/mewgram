@@ -1,10 +1,25 @@
-Mewgram
+{% extends 'base.html' %}
+{% block content %}
+
+{% if current_user.is_authenticated %}
+  <div class="purr">
+  {% include "avatar_snippet.html" with user=current_user %}
+  <form class="purrform" action="/" method="post">
+     {% csrf_token %}
+     {{ form }}
+     <input type="submit" value="Purr">
+  </form>
+  </div>
+</section>
+  <hr>
+<section>
+{% endif %}
+
 {% for purr in purrs %}
-<li>{% include "purr.html" with purr=purr %}
-<ul>
+<div class="purr">{% include "purr.html" with purr=purr %}</div>
     {% for reply in purr.replies %}
-    <li>{% include "purr.html" with purr=reply %}
+    <div class="purr reply">{% include "purr.html" with purr=reply %}</div>
     {% endfor %}
-</ul>
 {% endfor %}
-{{purrs}}
+
+{% endblock %}
