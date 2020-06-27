@@ -1,0 +1,10 @@
+Mewgram
+{% for purr in purrs %}
+<li>{% include "purr.html" with purr=purr %}
+<ul>
+    {% for reply in purr.replies %}
+    <li>{% include "purr.html" with purr=reply %}
+    {% endfor %}
+</ul>
+{% endfor %}
+{{purrs}}

@@ -1,6 +1,8 @@
 Django==3.1b1
 hypothesis[django]
 
+django-hashid-field
+
 gunicorn
 django-storages[google]
 django-environ
