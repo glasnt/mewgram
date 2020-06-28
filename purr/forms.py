@@ -1,13 +1,15 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from .models import Purr
 from django.contrib.auth import get_user_model
-from django.contrib.messages.views import SuccessMessageMixin
 
 class PurrForm(ModelForm):
     class Meta:
         model = Purr
         fields = ["content"]
         labels = { 'content': "" }
+        widgets = {
+          'content': Textarea(attrs={'cols': 80, 'rows': 3})
+        }
 
 class SettingsForm(ModelForm):
     class Meta:
