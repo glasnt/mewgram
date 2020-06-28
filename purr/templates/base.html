@@ -7,10 +7,27 @@
 <title>{%block title%}{%endblock%}&gt; mewgram &lt;</title>
 <body>
     <header>
-    <h1>&gt; mewgram &lt;</h1>
+    <nav>
+        <a href="/"><h1>&gt; mewgram &lt;</h1></a>
+        <ul>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'settings' %}">Settings</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+        </ul>
+    </nav>
     </header>
 
     <main>
+        {% if messages %}
+        <article>
+            {% for message in messages %}
+            <aside {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</aside>
+            {% endfor %}
+        </article>
+        {% endif %}
         <section>
         {% block content %}{% endblock %}
         </section>

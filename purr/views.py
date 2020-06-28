@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib.auth import logout
 
+from django.contrib import messages
 
-from .forms import PurrForm
+from .forms import *
 from .models import Purr
 
 def home(request):
@@ -16,6 +18,7 @@ def home(request):
     else:
         form = PurrForm()
 
+    #messages.add_message(request, messages.INFO, 'Hello world.')
     current_user = request.user
     purrs = Purr.objects.filter(in_reply_to=None).order_by('-date_posted')
     return render(request, 'home.html', 
@@ -34,4 +37,23 @@ def reply(request, purr_id):
                      )
             p.save()
     return HttpResponseRedirect('/')
-    
+
+
+def settings(request):
+    user = get_user_model().objects.get(pk=request.user.pk)
+    if request.method == 'POST':
+        form = SettingsForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Settings saved.')
+    else:
+        form = SettingsForm(instance=user)
+
+    return render(request, 'settings.html', 
+            {"form": form})
+
+
+def logout_view(request):
+    logout(request)
+    messages.add_message(request, messages.SUCCESS, 'Logged out. See you again!')
+    return HttpResponseRedirect('/')

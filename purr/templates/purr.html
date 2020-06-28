@@ -12,7 +12,8 @@
     <span onClick="toggleReply('form_{{purr.id}}')">🐾</span>
     <div id="form_{{purr.id}}" class="reply hidden-form">
     <form class="replyform" action="{% url 'reply' purr.id %}" method="post">{% csrf_token %}
-    <input name="content" id="id_content" class="replyinput"><input type="submit" value="Purr">
+    <input name="content" id="id_content" class="replyinput">
+    <input type="submit" value="Purr">
     </form>
     </div>
     {% endif %}
