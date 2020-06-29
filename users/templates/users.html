@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Users</h2>
+</section>
+<section>
+<table>
+{% for user in users %}
+<tr>
+  <td><div class="avatar"><img class='hex-image' src="{{ user.avatar }}" /></div></td>
+  <td>{{ user.email }}</td>
+  <td>{{ user.display_name}}</td>
+  <td><a href="{% url "user_detail" user.email %}">Profile</a></td>
+{% endfor %}
+</table>
+
+{% endblock %}

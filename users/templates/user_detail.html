@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="display:block">
+<h2>User profile: {{user.email}}</h2>
+{% if user.display_name != user.email %}<h2> a.k.a. {{user.display_name}}</h2>{% endif %}
+</div>
+</section>
+<section>
+<div class="avatar"><img class='hex-image' style="height: 200px" src="{{ user.avatar }}" /></div>
+
+{% endblock %}

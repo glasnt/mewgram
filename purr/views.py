@@ -39,20 +39,6 @@ def reply(request, purr_id):
     return HttpResponseRedirect('/')
 
 
-def settings(request):
-    user = get_user_model().objects.get(pk=request.user.pk)
-    if request.method == 'POST':
-        form = SettingsForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS, 'Settings saved.')
-    else:
-        form = SettingsForm(instance=user)
-
-    return render(request, 'settings.html', 
-            {"form": form})
-
-
 def logout_view(request):
     logout(request)
     messages.add_message(request, messages.SUCCESS, 'Logged out. See you again!')

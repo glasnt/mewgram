@@ -10,6 +10,7 @@
     <nav>
         <a href="/"><h1>&gt; mewgram &lt;</h1></a>
         <ul>
+        <li><a href="{% url 'user_list' %}">Users</a></li>
         {% if request.user.is_authenticated %}
         <li><a href="{% url 'settings' %}">Settings</a></li>
         <li><a href="{% url 'logout' %}">Logout</a></li>

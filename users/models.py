@@ -17,7 +17,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     @property
     def avatar(self):
-        return f"{settings.ROBOCAT_HOST}/{self.email}"
+        return f"/users/{self.email}/avatar"
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

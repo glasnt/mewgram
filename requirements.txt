@@ -2,6 +2,7 @@ Django==3.1b1
 hypothesis[django]
 
 django-hashid-field
+robohash
 
 gunicorn
 django-storages[google]

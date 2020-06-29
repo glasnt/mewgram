@@ -24,13 +24,12 @@ def access_secrets(secret_keys):
 """
 def createsuperuser(apps, schema_editor):
     settings = ["ADMINEMAIL", "ADMINPASS"]
-    if not all (k in os.environ.keys() for k in set(settings)):
-        secrets = access_secrets(settings)
-        email = secrets["ADMINEMAIL"]
-        password = secrets["ADMINPASS"]
-    else:
-        email = os.environ["ADMINEMAIL"]
-        password = os.environ["ADMINPASS"]
+#    if not all (k in os.environ.keys() for k in set(settings)):
+#        secrets = access_secrets(settings)
+#        email = secrets["ADMINEMAIL"]
+#        password = secrets["ADMINPASS"]
+    email = os.environ["ADMINEMAIL"]
+    password = os.environ["ADMINPASS"]
 
     # Create a new user using acquired password
     User = get_user_model()

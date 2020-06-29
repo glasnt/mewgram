@@ -11,8 +11,3 @@ class PurrForm(ModelForm):
           'content': Textarea(attrs={'cols': 80, 'rows': 3})
         }
 
-class SettingsForm(ModelForm):
-    class Meta:
-        model = get_user_model()
-        fields = ["display_name"]
-
