@@ -10,7 +10,6 @@ env = environ.Env()
 env.read_env(env_file)
 
 SECRET_KEY = env("SECRET_KEY")
-HASHID_FIELD_SALT = env("HASHID_FIELD_SALT")
 DEBUG = env("DEBUG", default=False)
 
 LOGIN_REDIRECT_URL = "/"

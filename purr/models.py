@@ -1,12 +1,10 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from hashid_field import HashidField
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
 
 class Purr(models.Model):
-    id = HashidField(primary_key=True, editable=False)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     content = models.TextField(max_length=140)
     date_posted = models.DateTimeField(default=timezone.now, editable=False)
