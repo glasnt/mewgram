@@ -1,0 +1,12 @@
+- model: purr.purr
+  pk: 1
+  fields: 
+    user: 1
+    content: "mew"
+
+- model: purr.purr
+  pk: 2
+  fields: 
+    user: 1
+    content: "🐈"
+    in_reply_to: 1 
