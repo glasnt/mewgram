@@ -2,7 +2,9 @@
 
 *A demo Django micro-blogging app, but it's cats.*
 
-TODO(glasnt): implement custom Cloud Run Button functions
+Before deploying: ensure the project you deploy to has [Cloud Firetore in Datastore mode enabled](https://console.cloud.google.com/datastore/setup)
+
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
 ## local development
 
