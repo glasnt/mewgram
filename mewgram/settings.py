@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'mewgram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-if env("USE_DATABASE_URL", default=False):
+if env("DATABASE_URL", default=False):
     DATABASES = { 'default': env.db() }
 else:
     DATABASES = {

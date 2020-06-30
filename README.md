@@ -2,7 +2,7 @@
 
 *A demo Django micro-blogging app, but it's cats.*
 
-Before deploying: ensure the project you deploy to has [Cloud Firetore in Datastore mode enabled](https://console.cloud.google.com/datastore/setup)
+Before deploying: ensure the project you deploy to has [Cloud Firetore in Datastore mode enabled](https://console.cloud.google.com/datastore/setup), and deploy this service to the same region. 
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
