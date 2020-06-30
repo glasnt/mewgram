@@ -1,0 +1,19 @@
+indexes:
+- kind: django_migrations
+  properties:
+  - name: app
+  - name: name
+- kind: auth_permission
+  properties:
+  - name: content_type_id
+  - name: codename
+- kind: django_admin_log
+  properties:
+  - name: user_id
+  - name: action_time
+    direction: desc
+- kind: purr_purr
+  properties:
+  - name: in_reply_to_id
+  - name: date_posted
+    direction: desc

@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import io
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -7,7 +8,22 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 env_file = os.path.join(BASE_DIR, ".env")
 env = environ.Env()
-env.read_env(env_file)
+
+import google.auth
+_, project = google.auth.default()
+
+if os.path.isfile('.env'):
+    env.read_env(env_file)
+else:
+    if project:
+        from google.cloud import secretmanager_v1beta1 as sm
+        client = sm.SecretManagerServiceClient()
+        settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+        path = client.secret_version_path(project, settings_name, "latest")
+        payload = client.access_secret_version(path).payload.data.decode("UTF-8")
+
+        env.read_env(io.StringIO(payload))
+
 
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG", default=False)
@@ -20,6 +36,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'gcloudc',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,7 +81,17 @@ WSGI_APPLICATION = 'mewgram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = { 'default': env.db() }
+if env("USE_DATABASE_URL", default=False):
+    DATABASES = { 'default': env.db() }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'gcloudc.db.backends.datastore',
+            'PROJECT': project,
+            'INDEXES_FILE': "djangaeidx.yaml",
+            "NAMESPACE": "mewgram",
+        }
+    }
 
 
 # Password validation
@@ -107,3 +134,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 STATICFILES_DIRS = ['purr/static']
+
+GS_BUCKET_NAME = env("GS_BUCKET_NAME", default=None)
+if GS_BUCKET_NAME:
+    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    GS_DEFAULT_ACL = "publicRead"
+
+    INSTALLED_APPS += ["storages"]
+    STATIC_URL = STATIC_ROOT
+
+else:
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    STATIC_URL = STATIC_ROOT
+
+    MEDIA_ROOT = "media/"  # where files are stored on the local filesystem
+    MEDIA_URL = "/media/"  # what is prepended to the image URL
