@@ -8,7 +8,7 @@
         {{ purr.content }}
     </div>
 
-    {% if purr.can_reply %}
+    {% if purr.can_reply and user.is_authenticated %}
     <span onClick="toggleReply('form_{{purr.id}}')">🐾</span>
     <div id="form_{{purr.id}}" class="reply hidden-form">
     <form class="replyform" action="{% url 'reply' purr.id %}" method="post">{% csrf_token %}

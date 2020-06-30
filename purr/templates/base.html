@@ -29,6 +29,21 @@
             {% endfor %}
         </article>
         {% endif %}
+
+        {% if form.errors %}
+        <article>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <aside class="error">{{error | escape}}</aside>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <aside class="error">{{error | escape}}</aside>
+        {% endfor %}
+        </article>
+        {% endif %}
+
+
         <section>
         {% block content %}{% endblock %}
         </section>
