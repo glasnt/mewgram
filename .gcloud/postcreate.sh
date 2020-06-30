@@ -12,10 +12,22 @@ echo ""
 echo ""
 echo "Mewgram is now deployed to ${SERVICE_URL}"
 echo ""
-echo "To login into the Django admin: "
+
+# Helpful added message if datastore indexes are still processing
+indexes_creating=$(gcloud datastore indexes list --format "value(kind)" --filter "state=CREATING" | wc -l)
+
+if [ $indexes_creating -ne 0 ]: then 
+    echo "⚠️  Datastore is still processing, so you may need to wait a few minutes for that to finish."
+    echo "   You can check it's ready by checking:"
+    echo "gcloud datastore indexes list --format 'value(state, kind)'"
+    echo ""
+fi
+
+echo "ℹ️  To login into the Django admin: "
 echo "  * go to ${SERVICE_URL}/admin"
 echo "  * login with the username and password that are stored in Secret Manager"
 echo ""
 echo "gcloud secrets versions access latest --secret ADMINEMAIL"
 echo "gcloud secrets versions access latest --secret ADMINPASS"
 echo ""
+
