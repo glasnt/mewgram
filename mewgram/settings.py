@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import io
 import environ
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -14,6 +15,7 @@ _, project = google.auth.default()
 
 if os.path.isfile('.env'):
     env.read_env(env_file)
+    logging.debug("Loaded env from local filesystem")
 else:
     if project:
         from google.cloud import secretmanager_v1beta1 as sm
@@ -23,6 +25,7 @@ else:
         payload = client.access_secret_version(path).payload.data.decode("UTF-8")
 
         env.read_env(io.StringIO(payload))
+        lodding.debug("Loaded env from Secret Manager")
 
 
 SECRET_KEY = env("SECRET_KEY")
@@ -81,7 +84,7 @@ WSGI_APPLICATION = 'mewgram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-if env("DATABASE_URL", default=False):
+if "DATABASE_URL" in os.environ.keys():
     DATABASES = { 'default': env.db() }
 else:
     DATABASES = {
@@ -93,6 +96,7 @@ else:
         }
     }
 
+logging.debug(f"Using {DATABASES['default']['ENGINE']} as database engine")
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
