@@ -1,0 +1,10 @@
+steps:
+    - id: 'pull   '
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['pull', 'gcr.io/${PROJECT_ID}/${_SERVICE}']
+    - id: 'migrate'
+      name: 'gcr.io/${PROJECT_ID}/${_SERVICE}'
+      args: ['sh', '.cloudbuild/django_migrate.sh']
+
+substitutions:
+    _SERVICE: mewgram

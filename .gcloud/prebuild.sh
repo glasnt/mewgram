@@ -37,6 +37,10 @@ gcloud services enable \
   secretmanager.googleapis.com
 stepdone
 
+stepdo "Initiating Datastore Index creation process"
+gcloud datastore indexes create index.yaml -q
+stepdone
+
 stepdo "Creating dedicated service account for $SERVICE_NAME"
 gcloud iam service-accounts create $SERVICE_NAME \
   --display-name "$SERVICE_NAME service account"
