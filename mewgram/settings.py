@@ -25,7 +25,7 @@ else:
         payload = client.access_secret_version(path).payload.data.decode("UTF-8")
 
         env.read_env(io.StringIO(payload))
-        lodding.debug("Loaded env from Secret Manager")
+        logging.debug("Loaded env from Secret Manager")
 
 
 SECRET_KEY = env("SECRET_KEY")
