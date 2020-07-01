@@ -17,3 +17,5 @@ indexes:
   - name: in_reply_to_id
   - name: date_posted
     direction: desc
+  - name: __key__
+    direction: desc
