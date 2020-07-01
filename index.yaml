@@ -17,5 +17,8 @@ indexes:
   - name: in_reply_to_id
   - name: date_posted
     direction: desc
+- kind: purr_purr
+  properties:
   - name: __key__
     direction: desc
+
