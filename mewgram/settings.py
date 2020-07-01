@@ -7,25 +7,40 @@ import logging
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
+# Two modes: local dev, and prod.
+# Local dev: have a .env file, use local settings.
+# Prod: Google auth, use stored settings.
+#
+# You can interact with prod on your local machine by being
+# authenticated to gcloud and not having a local .env file.
+
 env_file = os.path.join(BASE_DIR, ".env")
 env = environ.Env()
-
-import google.auth
-_, project = google.auth.default()
 
 if os.path.isfile('.env'):
     env.read_env(env_file)
     logging.debug("Loaded env from local filesystem")
-else:
-    if project:
-        from google.cloud import secretmanager_v1beta1 as sm
-        client = sm.SecretManagerServiceClient()
-        settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
-        path = client.secret_version_path(project, settings_name, "latest")
-        payload = client.access_secret_version(path).payload.data.decode("UTF-8")
+    LOCAL_DEVELOPMENT=True
 
-        env.read_env(io.StringIO(payload))
-        logging.debug("Loaded env from Secret Manager")
+else:
+    import google.auth
+    try:
+        _, project = google.auth.default()
+    except google.auth.exceptions.DefaultCredentialsError as e:
+        logging.error(e)
+        logging.error("If you want to run in local development mode, define a .env file")
+        sys.exit(1)
+
+    # Load settings from Secret Manager
+    from google.cloud import secretmanager_v1beta1 as sm
+    client = sm.SecretManagerServiceClient()
+    settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+    path = client.secret_version_path(project, settings_name, "latest")
+    payload = client.access_secret_version(path).payload.data.decode("UTF-8")
+
+    env.read_env(io.StringIO(payload))
+    logging.debug("Loaded env from Secret Manager")
+    LOCAL_DEVELOPMENT=False
 
 
 SECRET_KEY = env("SECRET_KEY")
@@ -84,8 +99,12 @@ WSGI_APPLICATION = 'mewgram.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-if "DATABASE_URL" in os.environ.keys():
-    DATABASES = { 'default': env.db() }
+if LOCAL_DEVELOPMENT:
+    if "DATABASE_URL" in os.environ.keys():
+        DATABASES = { 'default': env.db() }
+    else:
+        logging.error("DATABASE_URL is not defined in .env")
+        sys.exit(1)
 else:
     DATABASES = {
         'default': {
@@ -138,18 +157,22 @@ USE_TZ = True
 STATICFILES_DIRS = ['purr/static']
 STATIC_URL = '/static/'
 
-GS_BUCKET_NAME = env("GS_BUCKET_NAME", default=None)
-if GS_BUCKET_NAME:
-    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-    STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-    GS_DEFAULT_ACL = "publicRead"
-
-    INSTALLED_APPS += ["storages"]
-
-else:
+if LOCAL_DEVELOPMENT:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
     STATIC_URL = STATIC_ROOT
 
     MEDIA_ROOT = "media/"  # where files are stored on the local filesystem
     MEDIA_URL = "/media/"  # what is prepended to the image URL
+
+else:
+    GS_BUCKET_NAME = env("GS_BUCKET_NAME", default=None)
+    if GS_BUCKET_NAME:
+        DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+        STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+        GS_DEFAULT_ACL = "publicRead"
+
+        INSTALLED_APPS += ["storages"]
+    else:
+        logging.error("No GS_BUCKET_NAME defined in settings")
+        sys.exit(1)
