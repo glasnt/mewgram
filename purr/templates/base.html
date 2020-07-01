@@ -13,7 +13,8 @@
         <li><a href="{% url 'user_list' %}">Users</a></li>
         {% if request.user.is_authenticated %}
         <li><a href="{% url 'settings' %}">Settings</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li>{% if request.user.is_staff %}<a href="{% url 'admin:index' %}" class="admin">Admin</a><br>{%endif%}
+          <a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
         <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}

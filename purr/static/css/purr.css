@@ -80,3 +80,5 @@ aside.warning {
     border-left: 4px solid var(--color-warning);
 }
 ul.errorlist { display:none; }
+
+a.admin { color: red }
