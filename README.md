@@ -59,6 +59,9 @@ This project additionally makes use of:
 
 Deployment details can be found in `.gcloud/`, and more details about the Django-specific use of the Google components can be found in the [`django-demo-app-unicodex` docs](https://github.com/GoogleCloudPlatform/django-demo-app-unicodex/tree/master/docs).
 
+## cats
+
+mewgram uses [Robohash](https://github.com/e1ven/Robohash) set #4 for it's identicons. Robohash is available as a [Python package](https://pypi.org/project/robohash/). 
 
 ## limitations
 
