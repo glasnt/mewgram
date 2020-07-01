@@ -1,1 +1,1 @@
-echo "No prebuild steps defined"
+echo "No postbuild steps defined"
