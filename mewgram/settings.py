@@ -135,9 +135,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = ['purr/static']
+STATIC_URL = '/static/'
 
 GS_BUCKET_NAME = env("GS_BUCKET_NAME", default=None)
 if GS_BUCKET_NAME:
@@ -146,10 +145,10 @@ if GS_BUCKET_NAME:
     GS_DEFAULT_ACL = "publicRead"
 
     INSTALLED_APPS += ["storages"]
-    STATIC_URL = STATIC_ROOT
 
 else:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
     STATIC_URL = STATIC_ROOT
 
     MEDIA_ROOT = "media/"  # where files are stored on the local filesystem
