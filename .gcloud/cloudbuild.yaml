@@ -1,0 +1,11 @@
+# Designed to be used with Cloud Run Button handling build and deploy.
+steps:
+    - id: 'pull   '
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['pull', 'gcr.io/${PROJECT_ID}/${_SERVICE}']
+    - id: 'migrate'
+      name: 'gcr.io/${PROJECT_ID}/${_SERVICE}'
+      args: ['sh', '.gcloud/django_setup.sh']
+
+substitutions:
+    _SERVICE: mewgram

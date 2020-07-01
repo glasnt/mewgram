@@ -28,7 +28,7 @@ def home(request):
     )
 
 def reply(request, purr_id):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         form = PurrForm(request.POST)
         if form.is_valid():
             p = Purr(content=form.cleaned_data['content'],
@@ -36,10 +36,4 @@ def reply(request, purr_id):
                      in_reply_to=Purr.objects.get(pk=purr_id)
                      )
             p.save()
-    return HttpResponseRedirect('/')
-
-
-def logout_view(request):
-    logout(request)
-    messages.add_message(request, messages.SUCCESS, 'Logged out. See you again!')
     return HttpResponseRedirect('/')

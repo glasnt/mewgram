@@ -13,7 +13,8 @@
         <li><a href="{% url 'user_list' %}">Users</a></li>
         {% if request.user.is_authenticated %}
         <li><a href="{% url 'settings' %}">Settings</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li>{% if request.user.is_staff %}<a href="{% url 'admin:index' %}" class="admin">Admin</a><br>{%endif%}
+          <a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
         <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
@@ -29,6 +30,21 @@
             {% endfor %}
         </article>
         {% endif %}
+
+        {% if form.errors %}
+        <article>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <aside class="error">{{error | escape}}</aside>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <aside class="error">{{error | escape}}</aside>
+        {% endfor %}
+        </article>
+        {% endif %}
+
+
         <section>
         {% block content %}{% endblock %}
         </section>
@@ -37,4 +53,4 @@
     <hr>
         🐱 Frumpkin, 2020.
     </footer>
-<body>
+</body>

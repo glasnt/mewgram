@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from django.http import HttpResponseRedirect
 from robohash import Robohash
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth import logout
 import io
 
 
@@ -39,3 +41,9 @@ def settings(request):
         form = SettingsForm(instance=user)
 
     return render(request, "settings.html", {"form": form})
+
+
+def logout_view(request):
+    logout(request)
+    messages.add_message(request, messages.SUCCESS, 'Logged out. See you again!')
+    return HttpResponseRedirect('/')

@@ -1,0 +1,7 @@
+{ "hooks": {
+    "prebuild":   { "commands": [".gcloud/prebuild.sh"]   },
+    "postbuild":  { "commands": [".gcloud/postbuild.sh"]  },
+    "precreate":  { "commands": [".gcloud/precreate.sh"]  },
+    "postcreate": { "commands": [".gcloud/postcreate.sh"] }
+  }
+}
