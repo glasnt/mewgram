@@ -20,3 +20,4 @@ steps:
 
 substitutions:
     _SERVICE: mewgram
+    _REGION: us-central1
