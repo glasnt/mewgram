@@ -1,6 +1,6 @@
 # mewgram
 
-*This is a demo of a Django app using Google Datastore via [django-gcloud-connectors](https://gitlab.com/potato-oss/google-cloud/django-gcloud-connectors).*
+*This is a demo of a Django app using Google Datastore via [django-gcloud-connectors](https://gitlab.com/potato-oss/google-cloud/django-gcloud-connectors). Read the [dev.to post](https://dev.to/googlecloud/pure-serverless-django-with-django-gcloud-connectors-apo)*.
 
 Before deploying: ensure the project you deploy to has [Cloud Firestore in Datastore mode enabled](https://console.cloud.google.com/datastore/setup), and deploy this service to the same region. 
 
