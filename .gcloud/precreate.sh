@@ -1,6 +1,6 @@
 #!/bin/bash
 
-time source waitforindexes.sh
+time source .gcloud/waitforindexes.sh
 
 echo "🚀 Running initial Django migration (this will take a few minutes)..."
 echo "   Configurations: service ${K_SERVICE}, region ${GOOGLE_CLOUD_REGION}"
