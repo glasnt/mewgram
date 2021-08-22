@@ -1,12 +1,11 @@
-Django==2.2.13
-hypothesis[django]
+Django
+django-gcloud-connectors
 
+hypothesis[django]
 robohash
 
 gunicorn
 django-storages[google]
 django-environ
-google-cloud-secret-manager==0.1.1
+google-cloud-secret-manager
 psycopg2-binary
-
-django-gcloud-connectors==0.1.0
