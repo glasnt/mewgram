@@ -1,0 +1,8 @@
+SECRET_KEY=alsdkfjalksdjflkajsdflkjasdflkjasdf 
+DATABASE_URL=sqlite:///db.sqlite3
+
+DEBUG=True
+
+# Will be used to automatically create a superuser at first migrate
+ADMINEMAIL="purr@localhost"
+ADMINPASS="adsfasdf" 
