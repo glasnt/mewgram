@@ -174,3 +174,5 @@ else:
     else:
         logging.error("No GS_BUCKET_NAME defined in settings")
         sys.exit(1)
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
