@@ -31,11 +31,11 @@ else:
         raise ImproperlyConfigured("If you want to run in local development mode, define a .env file")
 
     # Load settings from Secret Manager
-    from google.cloud import secretmanager_v1beta1 as sm
+    from google.cloud import secretmanager as sm
     client = sm.SecretManagerServiceClient()
     settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
-    path = client.secret_version_path(project, settings_name, "latest")
-    payload = client.access_secret_version(path).payload.data.decode("UTF-8")
+    name = f"projects/{project}/secrets/{settings_name}/versions/latest"
+    payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
 
     env.read_env(io.StringIO(payload))
     logging.debug("Loaded env from Secret Manager")
