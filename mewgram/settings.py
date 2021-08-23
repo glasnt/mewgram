@@ -28,9 +28,7 @@ else:
     try:
         _, project = google.auth.default()
     except google.auth.exceptions.DefaultCredentialsError as e:
-        logging.error(e)
-        logging.error("If you want to run in local development mode, define a .env file")
-        sys.exit(1)
+        raise ImproperlyConfigured("If you want to run in local development mode, define a .env file")
 
     # Load settings from Secret Manager
     from google.cloud import secretmanager_v1beta1 as sm
@@ -104,8 +102,7 @@ if LOCAL_DEVELOPMENT:
     if "DATABASE_URL" in os.environ.keys():
         DATABASES = { 'default': env.db() }
     else:
-        logging.error("DATABASE_URL is not defined in .env")
-        sys.exit(1)
+        raise ImproperlyConfigured("DATABASE_URL is not defined in .env")
 else:
     DATABASES = {
         'default': {
